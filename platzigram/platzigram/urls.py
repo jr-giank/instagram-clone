@@ -13,13 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+#Importaciones de Django
 from django.contrib import admin
 from django.urls import path
-from platzigram import views
+
+#Importaciones personales o locales
+from platzigram import views as local_views
+from posts import views as posts_views
 
 urlpatterns = [
-    path('home/', views.home),
-    path('hora/', views.hora_actual),
-    path('sorted/', views.sorted_integers),
-    path('bienvenida/<str:name>/<int:age>/', views.bienvenida),
+    path('home/', local_views.home),
+    path('hora/', local_views.hora_actual),
+    path('sorted/', local_views.sorted_integers),
+    path('bienvenida/<str:name>/<int:age>/', local_views.bienvenida),
+    path('posts/', posts_views.list_post)
 ]
