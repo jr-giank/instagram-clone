@@ -26,5 +26,6 @@ urlpatterns = [
     path('hora/', local_views.hora_actual),
     path('sorted/', local_views.sorted_integers),
     path('bienvenida/<str:name>/<int:age>/', local_views.bienvenida),
-    path('posts/', posts_views.list_post)
+    path('posts/', posts_views.list_post),
+    path('admin/', admin.site.urls)
 ]
