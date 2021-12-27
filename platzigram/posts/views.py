@@ -41,4 +41,4 @@ posts_list_dictionaries = [
 # Create your views here.
 def list_post(request):
 
-    return render(request, 'feed.html', {'posts': posts_list_dictionaries})
+    return render(request, 'posts/feed.html', {'posts': posts_list_dictionaries})
