@@ -2,6 +2,7 @@
 
 #Importaciones de Django
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 #Utilities
 from datetime import datetime as dt
@@ -39,6 +40,7 @@ posts_list_dictionaries = [
 ]
 
 # Create your views here.
+@login_required #Sirve para que si no se a autentificado un usuario pues no se pueda acceder a posts, hay que configurar LOGIN_URL = /login/ en settings
 def list_post(request):
 
     return render(request, 'posts/feed.html', {'posts': posts_list_dictionaries})
