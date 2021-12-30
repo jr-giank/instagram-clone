@@ -1,8 +1,10 @@
 #Importaciones de Django
+from django import forms
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.utils import IntegrityError
+from users.forms import ProfileForm
 
 #Modelos 
 from django.contrib.auth.models import User
@@ -58,5 +60,30 @@ def signup_view(request):
     return render(request, 'users/signup.html')
 
 def update_profile(request):
-    
-    return render(request, 'users/update_profile.html')
+    """Update a user's profile view."""
+    profile = request.user.profile
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+
+            profile.website = data['website']
+            profile.phone_number = data['phone_number']
+            profile.biography = data['biography']
+            profile.profile_picture = data['profile_picture']
+            profile.save()
+
+            return redirect('update_profile')
+    else:
+        form = ProfileForm()
+
+    return render(
+        request=request,
+        template_name='users/update_profile.html',
+        context={
+            'profile': profile,
+            'user': request.user,
+            'form': form
+        }
+    )
