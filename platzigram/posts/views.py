@@ -1,46 +1,32 @@
 """Posts Views"""
 
 #Importaciones de Django
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 
-#Utilities
-from datetime import datetime as dt
+#Models
+from posts.models import Posts
 
-#Globales
-
-posts_list_dictionaries = [
-    {
-        'title': 'Mont Blanc',
-        'user': {
-            'name': 'Yésica Cortés',
-            'picture': 'https://picsum.photos/60/60/?image=1027'
-        },
-        'timestamp': dt.now().strftime('%b %dth, %Y - %H:%M hrs'),
-        'photo': 'https://picsum.photos/800/600?image=1036',
-    },
-    {
-        'title': 'Via Láctea',
-        'user': {
-            'name': 'Christian Van der Henst',
-            'picture': 'https://picsum.photos/60/60/?image=1005'
-        },
-        'timestamp': dt.now().strftime('%b %dth, %Y - %H:%M hrs'),
-        'photo': 'https://picsum.photos/800/800/?image=903',
-    },
-    {
-        'title': 'Nuevo auditorio',
-        'user': {
-            'name': 'Uriel (thespianartist)',
-            'picture': 'https://picsum.photos/60/60/?image=883'
-        },
-        'timestamp': dt.now().strftime('%b %dth, %Y - %H:%M hrs'),
-        'photo': 'https://picsum.photos/500/700/?image=1076',
-    }
-]
+#Importaciones del form de Django
+from posts.forms import PostForm
 
 # Create your views here.
 @login_required #Sirve para que si no se a autentificado un usuario pues no se pueda acceder a posts, hay que configurar LOGIN_URL = /login/ en settings
 def list_post(request):
 
-    return render(request, 'posts/feed.html', {'posts': posts_list_dictionaries})
+    post = Posts.objects.all().order_by('-created')
+
+    return render(request, 'posts/feed.html', {'posts': post})
+
+@login_required
+def create_post(request):
+    
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('feed')
+    else:
+        form = PostForm()
+
+    return render(request, 'posts/new.html', {'form': form, 'user': request.user, 'profile': request.user.profile})

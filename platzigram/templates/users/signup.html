@@ -13,6 +13,9 @@
     <form method="POST" action="{% url 'signup' %}">
         {% csrf_token %}
 
+        {{form.as_p}}
+
+        <!-----
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Username" name="username" required="true">
         </div>
@@ -31,6 +34,7 @@
         <div class="form-group">
             <input type="email" class="form-control" placeholder="Email address" name="email" required="true">
         </div>
+        ------>
 
         <button class="btn btn-primary btn-block">Register</button>
     </form>
