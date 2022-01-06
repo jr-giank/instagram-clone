@@ -3,7 +3,6 @@ from django import forms
 
 from django.contrib.auth.models import User
 from users.models import Profile
-from django.core.exceptions import ValidationError
 
 class SignUpForm(forms.Form):
     
