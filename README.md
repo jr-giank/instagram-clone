@@ -1,2 +1,3 @@
-# Curso-Django-Basico
-Este es el codigo que he usado para aprender Django, estoy haciendo mi primera aplicacion en Django la cual es una copia de instagram
+# Instagran Clone
+
+Este es un pequeño clon de instagram capaz de autenticar usuarios, crear y ver post el cual me sirvio para introducirme en el desarroblo web con Python/Django.
